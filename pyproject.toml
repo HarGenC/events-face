@@ -1,0 +1,27 @@
+[project]
+name = "events-face"
+version = "0.1.0"
+description = "Events Face Django service"
+package-mode = false
+requires-python = ">=3.12"
+
+
+dependencies = [
+    "django>=5.0",
+    "django-filter>=25.2",
+    "djangorestframework>=3.16.1",
+    "djangorestframework-simplejwt>=5.5.1",
+    "requests>=2.32.5",
+    "ruff>=0.14.10",
+]
+
+lint = [
+"ruff"
+]
+
+[tool.ruff.lint]
+extend-select = ["I"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
