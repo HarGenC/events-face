@@ -10,9 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from datetime import timedelta
 from pathlib import Path
-import os
+
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,7 +28,7 @@ PROVIDER_API = {
 NOTIFICATIONS_API = {
     "URL": os.getenv("NOTIFICATIONS_API_URL"),
     "TOKEN": os.getenv("NOTIFICATIONS_API_TOKEN"),
-    "OWNER_ID": os.getenv("OWNER_ID")
+    "OWNER_ID": os.getenv("OWNER_ID"),
 }
 
 

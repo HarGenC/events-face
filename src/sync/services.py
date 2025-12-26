@@ -9,6 +9,7 @@ from src.core.settings import PROVIDER_API
 
 from .models import SyncLog
 
+
 def fetch_events(url: str = PROVIDER_API["URL"], changed_at: datetime | None = None):
     """Возвращает список мероприятий с внешнего API."""
     params = {}
@@ -18,7 +19,7 @@ def fetch_events(url: str = PROVIDER_API["URL"], changed_at: datetime | None = N
     response = requests.get(
         url,
         headers={
-            "Authorization": f"Bearer {PROVIDER_API["TOKEN"]}",
+            "Authorization": f"Bearer {PROVIDER_API['TOKEN']}",
             "Content-Type": "application/json",
         },
         params=params,

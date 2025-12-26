@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('events', '0002_outboxmessage_registration'),
+        ("events", "0002_outboxmessage_registration"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='registration',
-            name='email',
+            model_name="registration",
+            name="email",
             field=models.EmailField(max_length=254),
         ),
     ]

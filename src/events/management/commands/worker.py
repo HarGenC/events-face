@@ -29,7 +29,7 @@ class Command(BaseCommand):
                         response = requests.post(
                             url,
                             headers={
-                                "Authorization": f"Bearer {NOTIFICATIONS_API["TOKEN"]}",
+                                "Authorization": f"Bearer {NOTIFICATIONS_API['TOKEN']}",
                                 "Content-Type": "application/json",
                             },
                             json=msg.payload,
