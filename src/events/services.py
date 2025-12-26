@@ -4,9 +4,7 @@ import uuid
 from django.db import transaction
 
 from events.models import OutboxMessage, Registration
-
-# В следующем коммите спрячу в .env
-owner_id = "a1a4fb29-2a76-47d9-9965-d386aa8ba650"
+from src.core.settings import NOTIFICATIONS_API
 
 
 def create_registration(registration_data):
@@ -21,7 +19,7 @@ def create_registration(registration_data):
             topic="order_created",
             payload={
                 "id": str(message_id),
-                "owner_id": str(owner_id),
+                "owner_id": str(NOTIFICATIONS_API["OWNER_ID"]),
                 "email": str(registration_data["email"]),
                 "message": str(random.randint(1000, 9999)),
             },

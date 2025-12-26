@@ -39,7 +39,7 @@ class Event(models.Model):
 class Registration(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     full_name = models.CharField(max_length=128)
-    email = models.EmailField(unique=True)
+    email = models.EmailField()
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     registered_at = models.DateTimeField(auto_now_add=True)

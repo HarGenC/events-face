@@ -12,19 +12,33 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from datetime import timedelta
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / ".env")
+
+PROVIDER_API = {
+    "URL": os.getenv("PROVIDER_API_URL"),
+    "TOKEN": os.getenv("PROVIDER_API_TOKEN"),
+}
+
+NOTIFICATIONS_API = {
+    "URL": os.getenv("NOTIFICATIONS_API_URL"),
+    "TOKEN": os.getenv("NOTIFICATIONS_API_TOKEN"),
+    "OWNER_ID": os.getenv("OWNER_ID")
+}
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-qq4k$yb$!$hzx4ibo_2rs8$a689$2m^av4u0u^!&_@vdlg-j)-"
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = []
 

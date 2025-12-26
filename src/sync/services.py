@@ -5,17 +5,11 @@ import requests
 from django.utils.dateparse import parse_datetime
 
 from events.models import Event, Venue
-from src.events.management.commands.worker import TOKEN
+from src.core.settings import PROVIDER_API
 
 from .models import SyncLog
 
-BASE_URL = "https://events.k3scluster.tech/api/events/"
-
-# В следующем коммите спрячу в .env
-TOKEN = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc19zdGFmZiI6ZmFsc2UsInN1YiI6IjMyIiwiZXhwIjoxNzY2NzgxMjAxLCJpYXQiOjE3NjY2OTQ4MDF9.a9RlvDN6casiPTqe6pqGY1Rkr4dmblj5q20cAPuBzCyb5ClBmRKgMVdAcszdgv1dXWM4A3drNuscXerA8oVwpfI0bGR0XhkPWyNzZuqGu7m0kcbqMTyRgpVCzgb9dY6EczI5LOJh48qyrhP1YiLgRkVfLxvAJHF_kkFXEIUbbHCGFAsxizkT-vylrXm0JDfn_o4jmVWwI4OYic0U7wbQIW4rwQryTXx9cz2bmLsDbDn0UIAqUzmyy4WzmkZPGEd0Ri6twbJwK6K8eW3nqT4CPAfBb0c7wFCezzMNyq34eDmV1DnEzQCokNxUGcHka4APcJzmQ-Xr4rU-2MSPw7_UMA"
-
-
-def fetch_events(url: str = BASE_URL, changed_at: datetime | None = None):
+def fetch_events(url: str = PROVIDER_API["URL"], changed_at: datetime | None = None):
     """Возвращает список мероприятий с внешнего API."""
     params = {}
     if changed_at:
@@ -24,7 +18,7 @@ def fetch_events(url: str = BASE_URL, changed_at: datetime | None = None):
     response = requests.get(
         url,
         headers={
-            "Authorization": f"Bearer {TOKEN}",
+            "Authorization": f"Bearer {PROVIDER_API["TOKEN"]}",
             "Content-Type": "application/json",
         },
         params=params,
