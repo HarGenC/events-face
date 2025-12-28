@@ -1,21 +1,24 @@
+import logging
 import time
 from datetime import datetime, timezone
 
 import requests
 from django.core.management.base import BaseCommand
 from django.db import transaction
+from rest_framework import status
 
 from events.models import OutboxMessage
 from src.core.settings import NOTIFICATIONS_API
 
+logger = logging.getLogger(__name__)
+
 
 class Command(BaseCommand):
-    help = "Create outboxmessage worker"
+    help = "run outboxmessage worker"
 
     def handle(self, *args, **options):
         url = NOTIFICATIONS_API["URL"]
         while True:
-            print("start check")
             with transaction.atomic():
                 # Получаем неотправленные сообщения
                 messages = (
@@ -35,15 +38,14 @@ class Command(BaseCommand):
                             json=msg.payload,
                             timeout=10,
                         )
-                        print("I'm here")
-                        print(msg.payload)
-                        print(response.status_code)
-                        if response.status_code in (201, 409):
-                            print("I'm here too")
+                        if response.status_code in (
+                            status.HTTP_201_CREATED,
+                            status.HTTP_409_CONFLICT,
+                        ):
                             msg.sent = True
                             msg.sent_at = datetime.now(timezone.utc)
                             msg.save()
-                            print("Сообщение было сохранено")
+                            logger.info("Сообщение {msg.id} было сохранено")
                     except Exception as e:
-                        print(f"Failed to process message {msg.id}: {e}")
+                        logger.error(f"Failed to process message {msg.id}: {e}")
             time.sleep(1)

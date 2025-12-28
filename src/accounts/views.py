@@ -74,16 +74,11 @@ class LogoutView(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
-        """
-        ожидаем тело: {"refresh": "<refresh_token>"}.
-        Также можно принимать refresh из cookies/заголовков — здесь простой вариант.
-        """
         refresh_token = request.data.get("refresh")
         if not refresh_token:
             return Response({"error": "Refresh token is required"}, status=400)
         try:
             token = RefreshToken(refresh_token)
-            # blacklist token (требует token_blacklist app)
             token.blacklist()
             return Response({"message": "Logged out successfully"}, status=200)
         except TokenError:

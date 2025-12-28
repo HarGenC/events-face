@@ -1,3 +1,4 @@
+import logging
 import random
 import uuid
 
@@ -5,6 +6,8 @@ from django.db import transaction
 
 from events.models import OutboxMessage, Registration
 from src.core.settings import NOTIFICATIONS_API
+
+logger = logging.getLogger(__name__)
 
 
 def create_registration(registration_data):
@@ -24,4 +27,5 @@ def create_registration(registration_data):
                 "message": str(random.randint(1000, 9999)),
             },
         )
+        logger.info("Сообщение с ID {message_id} было добавлено в OutboxMessage")
     return registration

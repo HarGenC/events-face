@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django_filters import rest_framework as filters
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.filters import OrderingFilter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -55,5 +55,10 @@ class EventRegisterView(APIView):
         result = create_registration(valid_data)
 
         if result is None:
-            return Response({"error": "Unsuccesfullt registered"}, status=422)
-        return Response({"message": "Succesfully registered"}, status=201)
+            return Response(
+                {"error": "Unsuccesfully registered"},
+                status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            )
+        return Response(
+            {"message": "Succesfully registered"}, status=status.HTTP_201_CREATED
+        )
